@@ -69,6 +69,26 @@ To build LineageOS, you'll need:
 
 * `bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick protobuf-compiler python3-protobuf lib32readline-dev lib32z1-dev libdw-dev libelf-dev libgnutls28-dev lz4 libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc xxd {% if cpu_architecture contains 'x86' %}yasm {% endif %}zip zlib1g-dev`
 
+{% if device.versions contains 13.0
+   or device.versions contains 14.1
+   or device.versions contains 15.1
+   or device.versions contains 16.0
+   or device.versions contains 17.1
+   or device.versions contains 18.1
+   or device.versions contains 19.1
+   or device.versions contains 20 %}
+To build LineageOS 20 and older on Ubuntu 23.10 (mantic) or newer, also install `libncurses5` from 23.04 (lunar) as follows:
+
+```
+wget https://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
+wget https://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.3-2_amd64.deb && sudo dpkg -i libncurses5_6.3-2_amd64.deb && rm -f libncurses5_6.3-2_amd64.deb
+```
+
+While for Ubuntu versions older than 23.10 (mantic), simply install:
+
+* `lib32ncurses5-dev libncurses5 libncurses5-dev`
+{% endif %}
+
 {% if device.versions contains 13.0 %}
 To build LineageOS 13.0, you'll also need:
 
@@ -80,17 +100,6 @@ Since LineageOS 22.0 the `virtio_*` targets use a Mesa that is based on upstream
 
 * `meson glslang-tools python3-mako`
 {% endif %}
-
-For Ubuntu 23.10 (mantic) or newer, install `libncurses5` from 23.04 (lunar) as follows:
-
-```
-wget https://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2_amd64.deb && sudo dpkg -i libtinfo5_6.3-2_amd64.deb && rm -f libtinfo5_6.3-2_amd64.deb
-wget https://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.3-2_amd64.deb && sudo dpkg -i libncurses5_6.3-2_amd64.deb && rm -f libncurses5_6.3-2_amd64.deb
-```
-
-While for Ubuntu versions older than 23.10 (mantic), simply install:
-
-* `lib32ncurses5-dev libncurses5 libncurses5-dev`
 
 Additionally, for Ubuntu versions older than 20.04 (focal), install also:
 
